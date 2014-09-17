@@ -46,3 +46,9 @@
            (conso a d l)
            (conso a res out)
            (appendo d s res)))))
+(define (unwrapo x out)
+  (conde
+   ((pairo x) (fresh (a)
+                     (caro x a)
+                     (unwrapo a out)))
+   ((== x out))))
