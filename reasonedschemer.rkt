@@ -1,8 +1,10 @@
 #lang racket
 
 (require (planet dfriedman/miniKanren/minikanren))
+
 (define succeed (== #t #t))
 (define fail (== #t #f))
+
 (define (caro l x)
   (fresh (xs)
      (== (cons x xs) l)))
@@ -11,11 +13,14 @@
      (== (cons x xs) l)))
 (define (conso x xs l)
   (== (cons x xs) l))
+
 (define (nullo x)
   (== x '()))
+
 (define (pairo p)
   (fresh (a b)
          (conso a b p)))
+
 (define (listo l)
   (conde
       ((nullo l))
@@ -23,12 +28,14 @@
        (fresh (d)
            (cdro l d)
            (listo d)))))
+
 (define (membero x l)
   (conde
    ((caro l x))
    ((fresh (d)
            (cdro l d)
            (membero x d)))))
+
 (define (rembero x l out)
   (conde
    ((nullo l) (nullo out))
@@ -37,8 +44,10 @@
            (conso a d l)
            (rembero x d res)
            (conso a res out)))))
+
 (define (surpriseo s)
   (rembero s '(a b c) '(a b c)))
+
 (define (appendo l s out)
   (conde
    ((nullo l) (== s out))
@@ -46,6 +55,7 @@
            (conso a d l)
            (conso a res out)
            (appendo d s res)))))
+
 (define (unwrapo-bad x out)
   (conde
    ((pairo x) (fresh (a)
@@ -56,6 +66,7 @@
 ; > (run 1 (x) (unwrapo-bad x 'pizza))
 ; The book says it should fail, and I agree, but we get:
 ; = '(pizza)
+
 (define (unwrapo x out)
   (conde
    ((== x out))
