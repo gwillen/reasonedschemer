@@ -46,9 +46,19 @@
            (conso a d l)
            (conso a res out)
            (appendo d s res)))))
-(define (unwrapo x out)
+(define (unwrapo-bad x out)
   (conde
    ((pairo x) (fresh (a)
                      (caro x a)
-                     (unwrapo a out)))
+                     (unwrapo-bad a out)))
    ((== x out))))
+; Why does this work?
+; > (run 1 (x) (unwrapo-bad x 'pizza))
+; The book says it should fail, and I agree, but we get:
+; = '(pizza)
+(define (unwrapo x out)
+  (conde
+   ((== x out))
+   ((pairo x) (fresh (a)
+                     (caro x a)
+                     (unwrapo a out)))))
