@@ -44,5 +44,5 @@
    ((nullo l) (== s out))
    ((fresh (a d res)
            (conso a d l)
-           (appendo d s res)
-           (conso a res out)))))
+           (conso a res out)
+           (appendo d s res)))))
