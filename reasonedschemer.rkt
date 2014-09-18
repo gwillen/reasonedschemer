@@ -73,3 +73,14 @@
    ((pairo x) (fresh (a)
                      (caro x a)
                      (unwrapo a out)))))
+
+(define (flatteno s out)
+  (conde
+   ((nullo s) (== '() out))
+   ((pairo s)
+    (fresh (a d res-a res-d)
+           (conso a d s)
+           (flatteno a res-a)
+           (flatteno d res-d)
+           (appendo res-a res-d out)))
+   ((conso s '() out))))
