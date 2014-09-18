@@ -77,10 +77,19 @@
 (define (flatteno s out)
   (conde
    ((nullo s) (== '() out))
-   ((pairo s)
-    (fresh (a d res-a res-d)
+   ((fresh (a d res-a res-d)
            (conso a d s)
            (flatteno a res-a)
            (flatteno d res-d)
            (appendo res-a res-d out)))
    ((conso s '() out))))
+
+(define (flattenrevo s out)
+  (conde
+   ((conso s '() out))
+   ((nullo s) (== '() out))
+   ((fresh (a d res-a res-d)
+           (conso a d s)
+           (flattenrevo a res-a)
+           (flattenrevo d res-d)
+           (appendo res-a res-d out)))))
