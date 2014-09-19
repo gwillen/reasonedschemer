@@ -66,6 +66,7 @@
 ; > (run 1 (x) (unwrapo-bad x 'pizza))
 ; The book says it should fail, and I agree, but we get:
 ; = '(pizza)
+; ANSWER: Because 'conde' in modern miniKanren, post-Reasoned-Schemer, is actually condi.
 
 (define (unwrapo x out)
   (conde
@@ -93,3 +94,17 @@
            (flattenrevo a res-a)
            (flattenrevo d res-d)
            (appendo res-a res-d out)))))
+
+(define (anyo g)
+  (conde
+   (g)
+   ((anyo g))))
+
+(define nevero (anyo fail))
+
+(define alwayso (anyo succeed))
+
+(define (salo g)
+  (conde
+   (succeed)
+   (g)))
